@@ -3,7 +3,7 @@
   "short_name": "JF Lehrplan",
   "description": "Interaktiver Ausbildungs- und Lehrplan der Jugendfeuerwehr Weddingstedt.",
   "lang": "de",
-  "start_url": "./index.html",
+  "start_url": "./?v=5",
   "scope": "./",
   "display": "standalone",
   "background_color": "#101820",
