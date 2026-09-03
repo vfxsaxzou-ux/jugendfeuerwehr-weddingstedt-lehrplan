@@ -24,6 +24,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+      - name: Fahrzeugkunde beim Start sichtbar machen
+        run: |
+          sed -i 's/\.vehicles{display:none/\.vehicles{display:block/' index.html
+          sed -i 's/CACHE_NAME = "jf-lehrplan-v1"/CACHE_NAME = "jf-lehrplan-v2"/' service-worker.js
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
