@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#b5121b">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon.svg">
+<hta:application id="jfLehrplan" applicationname="Jugendfeuerwehr Lehrplan" border="thin" caption="yes" showintaskbar="yes" singleinstance="yes" sysmenu="yes" windowstate="normal">
+<title>Jugendfeuerwehr Weddingstedt – Lehrplan</title>
+<style>
+:root{--red:#b5121b;--red2:#e33a40;--dark:#101820;--dark2:#1e2933;--bg:#e8edf0;--white:#fff;--green:#24754a;--gold:#f7b928;--blue:#0b4f71}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:linear-gradient(135deg,#f4f6f7,#e2e8eb);color:#16212b}
+header{background:linear-gradient(125deg,#071015 0%,#172630 48%,#a70f19 100%);color:white;padding:34px 20px;position:relative;overflow:hidden;border-bottom:5px solid var(--gold)}
+header:after{content:"";position:absolute;right:-70px;top:-90px;width:280px;height:280px;border:35px solid #ffffff12;border-radius:50%}
+header:before{content:"";position:absolute;inset:auto -80px 15px auto;width:360px;height:10px;background:repeating-linear-gradient(135deg,var(--gold) 0 18px,#111 18px 36px);transform:rotate(-10deg);opacity:.9}
+.brand{max-width:1150px;margin:auto;display:flex;align-items:center;gap:18px}
+.logo{width:78px;height:78px;border-radius:50%;background:linear-gradient(145deg,#d32f2f,#7f0000);border:4px solid #fff;display:grid;place-items:center;font-size:37px;box-shadow:0 5px 20px #0008}
+h1{margin:0;font-size:clamp(26px,4vw,44px);letter-spacing:.5px}.subtitle{margin-top:6px;color:#ddd}
+.wrap{max-width:1150px;margin:auto;padding:22px}
+.topbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:18px}
+button,select,input{border-radius:10px;padding:11px 14px;font-size:15px}
+button{border:0;background:var(--red);color:white;cursor:pointer;font-weight:600}button:hover{filter:brightness(1.1)}
+.secondary{background:#424242}.green{background:var(--green)}.gold{background:#8d6e00}
+select,input{border:1px solid #ccc;background:white}
+.dashboard{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px}
+.stat{background:white;border-radius:15px;padding:18px;box-shadow:0 4px 14px #0001}.stat strong{display:block;font-size:28px;margin-top:5px}
+.progress{height:18px;background:#d4d4d4;border-radius:20px;overflow:hidden;margin:10px 0 22px}.bar{height:100%;width:0;background:linear-gradient(90deg,var(--red),var(--green));transition:.3s}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.card{background:white;border-radius:16px;padding:18px;box-shadow:0 4px 14px #0001;border-top:5px solid var(--red)}.card.done{border-top-color:var(--green)}
+.card h3{margin:0 0 8px}.tag{display:inline-block;background:#eee;padding:5px 9px;border-radius:20px;font-size:12px;margin:2px}
+.details{display:none;border-top:1px solid #ddd;margin-top:12px;padding-top:10px}.card.open .details{display:block}
+.admin,.trainer{display:none;background:linear-gradient(135deg,#101820,#263641);color:white;border-radius:18px;padding:22px;margin-bottom:20px;box-shadow:0 8px 25px #0003;border-left:6px solid var(--gold)}
+.admin.show{display:block}.admin h2{margin-top:0;color:#fff}.admin-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.trainer.show{display:block}.trainer h2{margin-top:0;color:#fff}.trainer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}.trainer-box{background:#ffffff12;padding:18px;border-radius:12px}.trainer-box h3{margin-top:0;color:var(--gold)}.entry{border-left:3px solid var(--gold);background:#ffffff0d;border-radius:7px;padding:10px;margin:10px 0}.entry small{color:#cbd5dc}.entry p{margin:6px 0 0}
+.admin-box{background:#262626;padding:16px;border-radius:12px}.admin-box h3{margin-top:0}
+.quiz{background:white;border-radius:16px;padding:20px;margin-top:22px;box-shadow:0 4px 14px #0001}
+footer{text-align:center;padding:30px;color:#666}
+@media(max-width:700px){
+ .dashboard{grid-template-columns:1fr}.brand{align-items:flex-start;gap:12px}.logo{width:60px;height:60px;font-size:28px}header{padding:22px 14px}.wrap{padding:14px}h1{font-size:26px}.subtitle{font-size:14px}.user-bar{justify-content:flex-start;margin-top:14px}.topbar{display:grid;grid-template-columns:1fr 1fr}.topbar select{grid-column:1/-1}.topbar button{width:100%;padding:11px 6px;font-size:13px}.admin,.trainer{padding:15px;border-left-width:4px}.admin-grid,.trainer-grid{grid-template-columns:1fr}.vehicle-head,.vehicle-body{padding:16px}.vehicle-data{grid-template-columns:1fr}.equipment{gap:6px}.equipment span{font-size:12px;padding:6px 8px}.editor-row{display:grid;grid-template-columns:1fr}.editor-row input,.editor-row select{min-width:0}.user-fields{grid-template-columns:1fr}.user-item>span{width:100%;display:flex;gap:7px;flex-wrap:wrap}.user-item button{flex:1}.login-card{padding:24px 20px}.stat strong{font-size:24px}
+}
+.admin-editor{margin-top:20px;background:#1e1e1e;border-radius:14px;padding:18px}
+.editor-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.editor-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.editor-row input,.editor-row select{flex:1;min-width:170px}
+.edit-item{background:#292929;border-radius:12px;padding:12px;margin:10px 0}
+.edit-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:8px}
+.edit-grid input,.edit-grid select,.edit-item textarea{width:100%;padding:9px;border-radius:8px;border:1px solid #555;background:#fff}
+.edit-item textarea{min-height:90px;margin-top:8px}
+.user-item{display:flex;gap:10px;align-items:center;justify-content:space-between;background:#292929;padding:12px;border-radius:10px;margin:8px 0;flex-wrap:wrap}.user-fields{display:grid;grid-template-columns:repeat(4,minmax(130px,1fr));gap:8px;flex:1}.user-fields input,.user-fields select{width:100%;padding:9px;border-radius:8px;border:1px solid #555}
+.role{padding:5px 8px;border-radius:15px;background:#444}
+.muted{color:#bbb}
+.fire-label{display:inline-flex;align-items:center;gap:7px;text-transform:uppercase;letter-spacing:1px;color:var(--gold);font-weight:bold;font-size:12px}.fire-label:before{content:"";width:8px;height:8px;border-radius:50%;background:var(--red2);box-shadow:0 0 0 4px #e5393530}
+.vehicles{display:none;margin-bottom:20px}.vehicles.show{display:block}.vehicle-card{overflow:hidden;background:#fff;border-radius:18px;box-shadow:0 8px 25px #0015}.vehicle-head{padding:24px;background:linear-gradient(125deg,#101820,#273843 65%,#a70f19);color:#fff;border-bottom:5px solid var(--gold)}.vehicle-head h2{margin:4px 0}.vehicle-head p{margin:0;color:#e7ecef}.vehicle-body{padding:20px}.vehicle-data{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:10px;margin:16px 0}.vehicle-data div{background:#edf2f4;border-left:4px solid var(--red);padding:11px;border-radius:7px}.vehicle-data small{display:block;color:#52616b;font-weight:bold;text-transform:uppercase;font-size:11px;letter-spacing:.5px}.vehicle-data b{display:block;margin-top:4px}.equipment{display:flex;flex-wrap:wrap;gap:8px}.equipment span{background:#fff3cf;border:1px solid #f3c54d;padding:7px 10px;border-radius:20px;font-size:13px}.vehicle-purpose{background:#eef5f7;border-left:5px solid var(--blue);padding:15px;border-radius:8px;line-height:1.5}.vehicle-purpose h3{margin:0 0 7px;color:var(--blue)}
+.login-screen{min-height:100vh;display:grid;place-items:center;padding:20px;background:linear-gradient(135deg,#080808,#571313 65%,#b71c1c)}
+.login-card{width:min(100%,420px);background:#fff;border-radius:20px;padding:32px;box-shadow:0 16px 50px #0008}.login-card h2{margin:0 0 8px;color:var(--red)}
+.login-card p{color:#555;line-height:1.45}.login-card label{display:block;font-weight:600;margin-top:16px}.login-card input{width:100%;margin-top:6px}.login-card button{width:100%;margin-top:22px}
+.login-hint{font-size:13px;background:#fff3cd;padding:10px;border-radius:8px;color:#664d03}.login-error{min-height:20px;color:#b71c1c;font-weight:600;margin:12px 0 0}
+.user-bar{max-width:1150px;margin:0 auto 16px;display:flex;gap:10px;align-items:center;justify-content:flex-end;flex-wrap:wrap}.user-bar span{background:#ffffff22;color:white;padding:8px 12px;border-radius:20px;font-size:14px}
+</style>
+</head>
+<body>
+<section id="loginScreen" class="login-screen">
+ <form class="login-card" onsubmit="login(event)">
+  <h2>🚒 Anmeldung</h2>
+  <p>Bitte melde dich an, um den Lehrplan zu öffnen.</p>
+  <label for="loginName">Benutzername</label><input id="loginName" autocomplete="username" required placeholder="Benutzername">
+  <label for="loginPassword">Passwort</label><input id="loginPassword" type="password" autocomplete="current-password" required placeholder="Passwort">
+  <button type="submit">Anmelden</button>
+  <div id="loginError" class="login-error" aria-live="polite"></div>
+  <p class="login-hint">Erster Start: <b>admin</b> / <b>admin123</b>. Bitte ändere dieses Passwort anschließend in der Benutzerverwaltung.</p>
+ </form>
+</section>
+<div id="app" hidden>
+<header>
+ <div class="brand">
+  <div class="logo">🚒</div>
+  <div><div class="fire-label">Einsatzbereit für Wissen & Teamarbeit</div><h1>Jugendfeuerwehr Weddingstedt</h1><div class="subtitle">Interaktiver Ausbildungs- & Lehrplan</div></div>
+ </div>
+ <div class="user-bar"><span id="currentUser"></span><button class="secondary" onclick="logout()">Abmelden</button></div>
+</header>
+
+<div id="lehrplan" class="wrap">
+ <div class="topbar">
+  <select id="filter">
+   <option value="all">Alle Ausbildungsthemen</option>
+   <option value="grundlagen">Grundlagen</option><option value="technik">Feuerwehrtechnik</option>
+   <option value="erstehilfe">Erste Hilfe</option><option value="funk">Funk & Kommunikation</option>
+   <option value="einsatz">Einsatzübung</option><option value="team">Team & Sicherheit</option>
+  </select>
+  <button class="secondary" onclick="toggleVehicles()">🚒 Fahrzeugkunde</button>
+  <button id="adminButton" onclick="toggleAdmin()">⚙️ Administrator</button>
+  <button id="trainerButton" class="gold" onclick="toggleTrainer()">👨‍🚒 Ausbilderbereich</button>
+  <button class="secondary" onclick="window.print()">🖨️ Drucken</button>
+ </div>
+
+ <section id="admin" class="admin">
+  <h2>⚙️ Administratorbereich</h2>
+  <div class="admin-grid">
+   <div class="admin-box"><h3>Ausbildungsstand</h3><p id="adminProgress">0 / 12 Themen abgeschlossen</p><button class="green" onclick="completeAll()">Alle Themen abschließen</button></div>
+   <div class="admin-box"><h3>Verwaltung</h3><button class="secondary" onclick="resetPlan()">Fortschritt zurücksetzen</button></div>
+   <div class="admin-box"><h3>Ausbilder-Notiz</h3><input id="note" placeholder="z. B. nächste Übung..." style="width:100%"><br><br><button onclick="saveNote()">Notiz speichern</button></div>
+  </div>
+
+  <div class="admin-editor">
+   <h2>🛠️ Alles bearbeiten</h2>
+   <p class="muted">Als Administrator kannst du Lehrplantitel, Themen, Zeiten, Kategorien, Inhalte und Benutzerrechte ändern.</p>
+   <div class="editor-tabs">
+    <button onclick="showEditor('lessonsEditor')">📚 Lehrplan</button>
+    <button onclick="showEditor('usersEditor')">👥 Berechtigungen</button>
+    <button onclick="showEditor('settingsEditor')">⚙️ Seiteneinstellungen</button>
+   </div>
+
+   <div id="lessonsEditor" class="editor-panel">
+    <div class="editor-row">
+      <input id="newTitle" placeholder="Neues Thema">
+      <select id="newCat"><option value="grundlagen">Grundlagen</option><option value="technik">Feuerwehrtechnik</option><option value="erstehilfe">Erste Hilfe</option><option value="funk">Funk</option><option value="einsatz">Einsatzübung</option><option value="team">Team & Sicherheit</option></select>
+      <input id="newTime" placeholder="z. B. 60 min">
+      <button class="green" onclick="addLesson()">+ Thema hinzufügen</button>
+    </div>
+    <div id="lessonEditList"></div>
+   </div>
+
+   <div id="usersEditor" class="editor-panel" style="display:none">
+    <div class="editor-row">
+      <input id="newUser" placeholder="Benutzername">
+      <input id="newFullName" placeholder="Vor- und Nachname">
+      <input id="newEmail" type="email" placeholder="E-Mail (optional)">
+      <input id="newPassword" type="password" placeholder="Passwort">
+      <select id="newRole"><option value="admin">Administrator</option><option value="ausbilder">Ausbilder</option><option value="mitglied">Mitglied</option><option value="gast">Gast</option></select>
+      <select id="newActive"><option value="true">Aktiv</option><option value="false">Gesperrt</option></select>
+      <button class="green" onclick="addUser()">+ Benutzer hinzufügen</button>
+    </div>
+    <div id="userList"></div>
+   </div>
+
+   <div id="settingsEditor" class="editor-panel" style="display:none">
+    <div class="editor-row">
+      <input id="siteTitle" placeholder="Seitentitel">
+      <input id="siteSubtitle" placeholder="Untertitel">
+      <button onclick="saveSiteSettings()">Speichern</button>
+    </div>
+   </div>
+  </div>
+  <p id="savedNote" style="color:#ddd"></p>
+ </section>
+
+ <section id="vehicles" class="vehicles">
+  <article class="vehicle-card">
+   <div class="vehicle-head">
+    <div class="fire-label">Fahrzeugkunde · Führung & Einsatzleitung</div>
+    <h2>Florian Dithmarschen 51-10-01</h2>
+    <p>Kommandowagen (KdoW) · VW Passat B8 Variant</p>
+   </div>
+   <div class="vehicle-body">
+    <div class="vehicle-data">
+     <div><small>Fahrzeugbezeichnung</small><b>Kommandowagen (KdoW)</b></div>
+     <div><small>Fahrzeugtyp</small><b>VW Passat B8 Variant</b></div>
+     <div><small>Besatzung</small><b>1/0</b></div>
+     <div><small>Aufbau</small><b>Baron Industries</b></div>
+     <div><small>Leistung</small><b>120 PS</b></div>
+     <div><small>Gewicht</small><b>2.000 kg</b></div>
+     <div><small>Baujahr</small><b>2017</b></div>
+     <div><small>Indienststellung</small><b>2021</b></div>
+     <div><small>Führerschein</small><b>Klasse B</b></div>
+     <div><small>Löschmittel / Sonderfunktion</small><b>Feuerlöscher · Einsatzleitung</b></div>
+    </div>
+    <h3>🧰 Beladung & Ausstattung</h3>
+    <div class="equipment"><span>Feuerlöscher</span><span>Einsatzleitertasche</span><span>Halligan-Tool</span><span>faltbare Verkehrsleitkegel</span><span>First-Responder-Tasche</span></div>
+    <div class="vehicle-purpose">
+     <h3>🎯 Aufgabenbereich: Einsatzleiter / A-Dienst</h3>
+     <p>Mit dem Kommandowagen können Wehrführer, Stellvertreter oder eine andere Führungskraft schnell an der Einsatzstelle eintreffen. Vor Ort wird die Lage beurteilt und weitere Kräfte können bei Bedarf frühzeitig informiert werden.</p>
+    </div>
+   </div>
+  </article>
+  <article class="vehicle-card" style="margin-top:18px">
+   <div class="vehicle-head">
+    <div class="fire-label">Fahrzeugkunde · Einsatzführung & Kommunikation</div>
+    <h2>Florian Dithmarschen 51-11-01</h2>
+    <p>Einsatzleitwagen 1 (ELW 1) · Ford Transit</p>
+   </div>
+   <div class="vehicle-body">
+    <div class="vehicle-data">
+     <div><small>Fahrzeugbezeichnung</small><b>Einsatzleitwagen 1 (ELW 1)</b></div>
+     <div><small>Fahrzeugtyp</small><b>Ford Transit</b></div>
+     <div><small>Besatzung</small><b>1/7</b></div>
+     <div><small>Aufbau</small><b>Pütting</b></div>
+     <div><small>Leistung</small><b>110 PS</b></div>
+     <div><small>Gewicht</small><b>2.000 kg</b></div>
+     <div><small>Baujahr</small><b>2005</b></div>
+     <div><small>Führerschein</small><b>Klasse B</b></div>
+     <div><small>Sonderfunktion</small><b>Einsatzführung & Kommunikation</b></div>
+    </div>
+    <h3>🧰 Beladung & Ausstattung</h3>
+    <div class="equipment"><span>Material zur Einsatzführung</span><span>Einsatzdokumentation</span><span>3 Digitalfunk-Arbeitsplätze</span><span>Handlampen</span><span>Erste-Hilfe-Rucksack mit AED</span></div>
+    <div class="vehicle-purpose">
+     <h3>🎯 Aufgabenbereich: Voraus- und Erkundungsfahrzeug</h3>
+     <p>Der ELW 1 ist in vielen Fällen Voraus- und Erkundungsfahrzeug. An der Einsatzstelle bildet er die Kommunikationszentrale zwischen Einsatzabschnitten, Einsatzleitung und Einsatzleitstelle. Im Einsatz ist er in der Regel mit Einsatzleiter, Führungsassistenz sowie mindestens einer Funkerin oder einem Funker besetzt.</p>
+    </div>
+   </div>
+  </article>
+  <article class="vehicle-card" style="margin-top:18px">
+   <div class="vehicle-head">
+    <div class="fire-label">Fahrzeugkunde · Brandbekämpfung & Technische Hilfeleistung</div>
+    <h2>Florian Dithmarschen 51-48-01</h2>
+    <p>Hilfeleistungslöschgruppenfahrzeug (HLF) · Mercedes Atego 1529</p>
+   </div>
+   <div class="vehicle-body">
+    <div class="vehicle-data">
+     <div><small>Fahrzeugbezeichnung</small><b>Hilfeleistungslöschgruppenfahrzeug (HLF)</b></div>
+     <div><small>Fahrzeugtyp</small><b>Mercedes Atego 1529</b></div>
+     <div><small>Besatzung</small><b>1/8</b></div>
+     <div><small>Aufbau</small><b>Schlingmann</b></div>
+     <div><small>Leistung</small><b>260 PS</b></div>
+     <div><small>Gewicht</small><b>16.000 kg</b></div>
+     <div><small>Baujahr</small><b>2013</b></div>
+     <div><small>Führerschein</small><b>Klasse C</b></div>
+     <div><small>Löschmittel</small><b>2.500 l Wasser · 120 l Schaum</b></div>
+    </div>
+    <h3>🧰 Beladung & Ausstattung</h3>
+    <div class="equipment"><span>Technischer Hilfeleistungssatz: Schere & Spreizer</span><span>Kettensäge / Rescue Cut</span><span>4 Atemschutzgeräte im Innenraum</span><span>2 Atemschutzgeräte Reserve</span><span>Erste-Hilfe-Rucksack</span><span>wasserführende Armaturen</span><span>4-teilige Steckleiter</span><span>3-teilige Schiebeleiter</span><span>Wasserwerfer auf dem Dach</span></div>
+    <div class="vehicle-purpose">
+     <h3>🎯 Aufgabenbereich: Brandbekämpfung & Technische Hilfeleistung</h3>
+     <p>Das HLF dient zur Brandbekämpfung und zur technischen Hilfeleistung. Durch seine Löschmittel, den Rettungssatz und die umfangreiche Beladung kann es bei vielen Einsatzlagen schnell und vielseitig eingesetzt werden.</p>
+    </div>
+   </div>
+  </article>
+  <article class="vehicle-card" style="margin-top:18px">
+   <div class="vehicle-head">
+    <div class="fire-label">Fahrzeugkunde · Wasserversorgung über lange Wegstrecken</div>
+    <h2>Florian Dithmarschen 51-47-01</h2>
+    <p>Löschgruppenfahrzeug (LF) · Mercedes Atego 1530</p>
+   </div>
+   <div class="vehicle-body">
+    <div class="vehicle-data">
+     <div><small>Fahrzeugbezeichnung</small><b>Löschgruppenfahrzeug (LF)</b></div>
+     <div><small>Fahrzeugtyp</small><b>Mercedes Atego 1530</b></div>
+     <div><small>Besatzung</small><b>1/8</b></div>
+     <div><small>Aufbau</small><b>Schlingmann GmbH &amp; Co. KG, Dissen</b></div>
+     <div><small>Leistung</small><b>nicht angegeben</b></div>
+     <div><small>Gewicht</small><b>16.000 kg</b></div>
+     <div><small>Baujahr</small><b>2023</b></div>
+     <div><small>Führerschein</small><b>Klasse C</b></div>
+     <div><small>Löschmittel</small><b>200 l Wasser</b></div>
+     <div><small>Sonderfunktion</small><b>Wasserversorgung über Langstrecken</b></div>
+    </div>
+    <h3>🧰 Beladung & Ausstattung</h3>
+    <div class="equipment"><span>wasserführende Armaturen</span><span>Kettensäge</span><span>LKW-Rettungsplattform / Schienenrollwagen</span><span>tragbare Feuerlöschpumpe</span><span>Beleuchtungsmaterial</span><span>4-teilige Steckleiter</span><span>800 m B-Schlauch in Buchten und auf zwei Haspeln</span><span>Waldbrandausrüstung</span><span>Faltbehälter für Löschwasser</span><span>2 mobile Wasserwerfer</span></div>
+    <div class="vehicle-purpose">
+     <h3>🎯 Aufgabenbereich: Wasserversorgung über Langstrecken</h3>
+     <p>Das Löschgruppenfahrzeug stellt Wasser über lange Wegstrecken bereit. Seine umfangreiche Schlauchbeladung, die tragbare Feuerlöschpumpe und die mobilen Wasserwerfer ermöglichen eine flexible Wasserversorgung, auch bei Wald- und Vegetationsbränden.</p>
+    </div>
+   </div>
+  </article>
+ </section>
+
+ <section id="trainer" class="trainer">
+  <h2>👨‍🚒 Ausbilderbereich</h2>
+  <p class="muted">Interne Abstimmung und Planung für Ausbilderinnen und Ausbilder.</p>
+  <div class="trainer-grid">
+   <div class="trainer-box">
+    <h3>📅 Termine planen</h3>
+    <div class="editor-row"><input id="appointmentDate" type="date"><input id="appointmentTime" type="time"><input id="appointmentTitle" placeholder="z. B. Dienstabend: Löschangriff"></div>
+    <input id="appointmentInfo" placeholder="Ort oder kurze Hinweise" style="width:100%"><br><br>
+    <button class="green" onclick="addAppointment()">+ Termin eintragen</button>
+    <div id="appointmentList"></div>
+   </div>
+   <div class="trainer-box">
+    <h3>💬 Absprachen</h3>
+    <textarea id="agreementText" placeholder="Absprachen für das Ausbilderteam festhalten…" style="width:100%;min-height:105px;padding:10px;border-radius:8px"></textarea><br><br>
+    <button onclick="addAgreement()">Abstimmung speichern</button>
+    <div id="agreementList"></div>
+   </div>
+  </div>
+ </section>
+
+ <div class="dashboard">
+  <div class="stat">📚 Themen<strong id="count">0 / 12</strong></div>
+  <div class="stat">📈 Fortschritt<strong id="percent">0%</strong></div>
+  <div class="stat">🔥 Status<strong id="status">Ausbildung läuft</strong></div>
+ </div>
+ <div class="progress"><div class="bar" id="bar"></div></div>
+
+ <div class="grid" id="lessons"></div>
+
+ <section class="quiz">
+  <h2>🧠 Jugendfeuerwehr-Wissenscheck</h2>
+  <p id="question"></p><div id="answers"></div><p id="quizResult"></p>
+  <button class="secondary" onclick="nextQuestion()">Nächste Frage</button>
+ </section>
+</div>
+
+<footer>Jugendfeuerwehr Weddingstedt · Interaktiver Lehrplan · Vorlage für die interne Ausbildung</footer>
+</div>
+
+<script>
+let lessons=JSON.parse(localStorage.getItem("jfLessons")||'null')||[
+{id:1,cat:"grundlagen",title:"1. Feuerwehr-Grundlagen",time:"60 min",items:["Aufgaben der Feuerwehr","Fahrzeuge kennenlernen","Feuerwehrhaus und Verhalten","Grundregeln der Jugendfeuerwehr"]},
+{id:2,cat:"team",title:"2. Unfallverhütung & Sicherheit",time:"60 min",items:["Gefahren erkennen","Schutzausrüstung kennenlernen","Sicheres Verhalten","Aufsicht und Meldewege"]},
+{id:3,cat:"technik",title:"3. Feuerwehrgeräte",time:"90 min",items:["Schläuche und Strahlrohre","Armaturen","Leinen und Knoten","Geräte sicher zuordnen"]},
+{id:4,cat:"technik",title:"4. Löschwasserversorgung",time:"90 min",items:["Wasserentnahmestellen","Schlaucharten","Übungsleitung aufbauen","Schlauchmanagement"]},
+{id:5,cat:"technik",title:"5. Löschangriff – Grundlagen",time:"90 min",items:["Übungsszenario","Aufgabenverteilung","Kommunikation","Nachbesprechung"]},
+{id:6,cat:"funk",title:"6. Funk & Kommunikation",time:"60 min",items:["Grundprinzipien","Kurze Meldungen","Rufnamen","Funkdisziplin"]},
+{id:7,cat:"erstehilfe",title:"7. Erste Hilfe",time:"90 min",items:["Notruf","Bewusstsein und Atmung","Stabile Seitenlage","Hilfe bis Rettungsdienst eintrifft"]},
+{id:8,cat:"grundlagen",title:"8. Brennen & Löschen",time:"90 min",items:["Verbrennungsdreieck","Brandklassen","Löschwirkung","Sichere Demonstrationen"]},
+{id:9,cat:"team",title:"9. Knoten & Leinen",time:"60 min",items:["Wichtige Knoten","Leinen handhaben","Geschicklichkeitsstationen","Teamaufgaben"]},
+{id:10,cat:"einsatz",title:"10. Einsatzübung",time:"120 min",items:["Lage erkunden","Aufgaben verteilen","Geräte bereitstellen","Sichere Durchführung und Auswertung"]},
+{id:11,cat:"einsatz",title:"11. Planspiel",time:"60 min",items:["Einsatzlage lesen","Gefahren erkennen","Ressourcen planen","Entscheidung begründen"]},
+{id:12,cat:"team",title:"12. Abschluss & Prüfungsspiel",time:"90 min",items:["Gerätekunde","Knoten","Funk","Team-Challenge und Feedback"]}
+];
+let users=JSON.parse(localStorage.getItem("jfUsers")||'null')||[
+{name:"admin",fullName:"Hauptadministrator",email:"",role:"admin",active:true,password:"admin123"},{name:"ausbilder",fullName:"Ausbilder 1",email:"",role:"ausbilder",active:true,password:"ausbilder123"},{name:"mitglied",fullName:"Jugendfeuerwehrmitglied",email:"",role:"mitglied",active:true,password:"mitglied123"}
+];
+// Bestehende Benutzer aus älteren Versionen erhalten ein Startpasswort.
+users=users.map(u=>({fullName:u.fullName||u.name,email:u.email||"",active:u.active!==false,...u,password:u.password|| (u.role==="admin"?"admin123":u.role==="ausbilder"?"ausbilder123":"mitglied123")}));
+let state=JSON.parse(localStorage.getItem("jfWeddingstedt")||"{}");
+let training=JSON.parse(localStorage.getItem("jfTraining")||'{"appointments":[],"agreements":[]}');
+if(!Array.isArray(training.appointments))training.appointments=[];if(!Array.isArray(training.agreements))training.agreements=[];
+let currentUser=JSON.parse(sessionStorage.getItem("jfCurrentUser")||"null");
+const lessonsEl=document.getElementById("lessons");
+function saveAll(){localStorage.setItem("jfLessons",JSON.stringify(lessons));localStorage.setItem("jfUsers",JSON.stringify(users));localStorage.setItem("jfWeddingstedt",JSON.stringify(state));localStorage.setItem("jfTraining",JSON.stringify(training));}
+function render(){
+ const f=document.getElementById("filter").value;lessonsEl.innerHTML="";
+ lessons.filter(x=>f==="all"||x.cat===f).forEach(x=>{
+  const done=!!state[x.id],c=document.createElement("article");c.className="card"+(done?" done":"");
+  const progressButton=canManageProgress()?` <button class="${done?"secondary":"green"}" onclick="toggleDone(${x.id})">${done?"Als offen":"Abschließen"}</button>`:"";
+  c.innerHTML=`<h3>${x.title} ${done?"✅":""}</h3><span class="tag">⏱️ ${x.time}</span><p><button onclick="details(${x.id})">Details</button>${progressButton}</p><div class="details"><ul>${x.items.map(i=>`<li>${i}</li>`).join("")}</ul></div>`;
+  lessonsEl.appendChild(c);
+ });
+ updateStats();
+}
+function details(id){document.querySelectorAll(".card").forEach(c=>{if(c.innerHTML.includes(`details(${id})`))c.classList.toggle("open")})}
+function canManageProgress(){return currentUser&&(currentUser.role==="admin"||currentUser.role==="ausbilder")}
+function toggleDone(id){if(!canManageProgress())return alert("Mitglieder können den Ausbildungsstand nur ansehen.");state[id]=!state[id];saveAll();render();renderEditors()}
+function updateStats(){const n=Object.values(state).filter(Boolean).length,p=lessons.length?Math.round(n/lessons.length*100):0;document.getElementById("count").textContent=`${n} / ${lessons.length}`;document.getElementById("percent").textContent=p+"%";document.getElementById("bar").style.width=p+"%";document.getElementById("status").textContent=p===100?"🎉 Lehrplan abgeschlossen":"Ausbildung läuft";document.getElementById("adminProgress").textContent=`${n} / ${lessons.length} Themen abgeschlossen`}
+function toggleAdmin(){if(!currentUser||currentUser.role!=="admin")return alert("Dieser Bereich ist nur für Administratoren zugänglich.");document.getElementById("admin").classList.toggle("show");renderEditors()}
+function toggleVehicles(){document.getElementById("vehicles").classList.toggle("show");document.getElementById("vehicles").scrollIntoView({behavior:"smooth",block:"start"})}
+function canTrain(){return currentUser&&(currentUser.role==="admin"||currentUser.role==="ausbilder")}
+function toggleTrainer(){if(!canTrain())return alert("Der Ausbilderbereich ist nur für Ausbilder und Administratoren zugänglich.");document.getElementById("trainer").classList.toggle("show");renderTraining()}
+function resetPlan(){if(!currentUser||currentUser.role!=="admin")return; if(confirm("Fortschritt wirklich zurücksetzen?")){state={};saveAll();render()}}
+function completeAll(){if(!currentUser||currentUser.role!=="admin")return;lessons.forEach(x=>state[x.id]=true);saveAll();render()}
+function saveNote(){const n=document.getElementById("note").value;localStorage.setItem("jfNote",n);document.getElementById("savedNote").textContent="Gespeicherte Notiz: "+n}
+function showEditor(id){document.querySelectorAll(".editor-panel").forEach(x=>x.style.display="none");document.getElementById(id).style.display="block"}
+function saveLesson(id){
+ const x=lessons.find(a=>a.id===id);x.title=document.getElementById("t"+id).value;x.cat=document.getElementById("c"+id).value;x.time=document.getElementById("m"+id).value;
+ x.items=document.getElementById("i"+id).value.split("\n").map(s=>s.trim()).filter(Boolean);saveAll();render();renderEditors();
+}
+function deleteLesson(id){if(confirm("Thema löschen?")){lessons=lessons.filter(x=>x.id!==id);delete state[id];saveAll();render();renderEditors()}}
+function addLesson(){
+ const title=document.getElementById("newTitle").value.trim();if(!title)return alert("Bitte einen Titel eingeben.");
+ const id=Date.now();lessons.push({id,cat:document.getElementById("newCat").value,title,time:document.getElementById("newTime").value||"60 min",items:["Neuen Ausbildungsinhalt eintragen"]});
+ saveAll();document.getElementById("newTitle").value="";document.getElementById("newTime").value="";render();renderEditors();
+}
+function addUser(){
+ const name=document.getElementById("newUser").value.trim(),password=document.getElementById("newPassword").value;if(!name||!password)return alert("Bitte Benutzername und Passwort eingeben.");
+ if(users.some(u=>u.name.toLowerCase()===name.toLowerCase()))return alert("Dieser Benutzername ist bereits vergeben.");
+ users.push({name,fullName:document.getElementById("newFullName").value.trim()||name,email:document.getElementById("newEmail").value.trim(),role:document.getElementById("newRole").value,active:document.getElementById("newActive").value==="true",password});saveAll();document.getElementById("newUser").value="";document.getElementById("newFullName").value="";document.getElementById("newEmail").value="";document.getElementById("newPassword").value="";renderEditors();
+}
+function saveUser(i){const u=users[i],wasCurrent=currentUser&&currentUser.name===u.name,name=document.getElementById("u"+i).value.trim(),fullName=document.getElementById("f"+i).value.trim(),email=document.getElementById("e"+i).value.trim(),password=document.getElementById("p"+i).value;if(!name)return alert("Ein Benutzername ist erforderlich.");if(users.some((x,n)=>n!==i&&x.name.toLowerCase()===name.toLowerCase()))return alert("Dieser Benutzername ist bereits vergeben.");u.name=name;u.fullName=fullName||name;u.email=email;u.role=document.getElementById("r"+i).value;u.active=document.getElementById("a"+i).value==="true";if(password)u.password=password;if(wasCurrent){currentUser={name:u.name,role:u.role};sessionStorage.setItem("jfCurrentUser",JSON.stringify(currentUser));showApp()}saveAll();renderEditors();alert("Benutzer gespeichert.")}
+function deleteUser(i){if(users[i].name===currentUser?.name)return alert("Der aktuell angemeldete Benutzer kann nicht entfernt werden.");if(confirm("Benutzer entfernen?")){users.splice(i,1);saveAll();renderEditors()}}
+function renderEditors(){
+ const le=document.getElementById("lessonEditList"); if(!le)return;
+ le.innerHTML=lessons.map(x=>`<div class="edit-item"><div class="edit-grid"><input id="t${x.id}" value="${escapeHtml(x.title)}"><select id="c${x.id}">${["grundlagen","technik","erstehilfe","funk","einsatz","team"].map(c=>`<option ${x.cat===c?"selected":""} value="${c}">${c}</option>`).join("")}</select><input id="m${x.id}" value="${escapeHtml(x.time)}"></div><textarea id="i${x.id}">${escapeHtml(x.items.join("\n"))}</textarea><br><button onclick="saveLesson(${x.id})">💾 Speichern</button> <button class="secondary" onclick="deleteLesson(${x.id})">🗑️ Löschen</button></div>`).join("");
+ document.getElementById("userList").innerHTML=users.map((u,i)=>`<div class="user-item"><div class="user-fields"><input id="u${i}" value="${escapeHtml(u.name)}" placeholder="Benutzername"><input id="f${i}" value="${escapeHtml(u.fullName)}" placeholder="Name"><input id="e${i}" type="email" value="${escapeHtml(u.email)}" placeholder="E-Mail"><select id="r${i}"><option ${u.role==="admin"?"selected":""} value="admin">Administrator</option><option ${u.role==="ausbilder"?"selected":""} value="ausbilder">Ausbilder</option><option ${u.role==="mitglied"?"selected":""} value="mitglied">Mitglied</option><option ${u.role==="gast"?"selected":""} value="gast">Gast</option></select><select id="a${i}"><option ${u.active!==false?"selected":""} value="true">Aktiv</option><option ${u.active===false?"selected":""} value="false">Gesperrt</option></select><input id="p${i}" type="password" placeholder="Neues Passwort (optional)"></div><span><button onclick="saveUser(${i})">💾 Speichern</button> <button class="secondary" onclick="deleteUser(${i})">Entfernen</button></span></div>`).join("");
+}
+function addAppointment(){const date=document.getElementById("appointmentDate").value,title=document.getElementById("appointmentTitle").value.trim();if(!date||!title)return alert("Bitte Datum und Terminbezeichnung eingeben.");training.appointments.push({id:Date.now(),date,time:document.getElementById("appointmentTime").value,title,info:document.getElementById("appointmentInfo").value.trim()});training.appointments.sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time));saveAll();document.getElementById("appointmentTitle").value="";document.getElementById("appointmentInfo").value="";renderTraining()}
+function deleteAppointment(id){training.appointments=training.appointments.filter(x=>x.id!==id);saveAll();renderTraining()}
+function addAgreement(){const text=document.getElementById("agreementText").value.trim();if(!text)return alert("Bitte eine Absprache eingeben.");training.agreements.unshift({id:Date.now(),text,author:currentUser.name,created:new Date().toLocaleString("de-DE")});saveAll();document.getElementById("agreementText").value="";renderTraining()}
+function deleteAgreement(id){training.agreements=training.agreements.filter(x=>x.id!==id);saveAll();renderTraining()}
+function renderTraining(){const appointments=document.getElementById("appointmentList"),agreements=document.getElementById("agreementList");if(!appointments||!agreements)return;appointments.innerHTML=training.appointments.length?training.appointments.map(x=>`<div class="entry"><b>${escapeHtml(x.date)} ${escapeHtml(x.time||"")} · ${escapeHtml(x.title)}</b><p>${escapeHtml(x.info||"Keine weiteren Hinweise")}</p><button class="secondary" onclick="deleteAppointment(${x.id})">Entfernen</button></div>`).join(""):'<p class="muted">Noch keine Termine geplant.</p>';agreements.innerHTML=training.agreements.length?training.agreements.map(x=>`<div class="entry"><small>${escapeHtml(x.created)} · ${escapeHtml(x.author)}</small><p>${escapeHtml(x.text)}</p><button class="secondary" onclick="deleteAgreement(${x.id})">Entfernen</button></div>`).join(""):'<p class="muted">Noch keine Absprachen gespeichert.</p>'}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function login(event){
+ event.preventDefault();const name=document.getElementById("loginName").value.trim(),password=document.getElementById("loginPassword").value;
+ const normalizedName=name.toLowerCase();
+ // Die Kurz-Anmeldungen funktionieren auch mit Benutzerlisten aus älteren Versionen.
+ const user=users.find(u=>u.active!==false&&(u.name.toLowerCase()===normalizedName||(normalizedName==="admin"&&u.role==="admin")||(normalizedName==="ausbilder"&&u.role==="ausbilder")||(normalizedName==="mitglied"&&u.role==="mitglied"))&&u.password===password);
+ if(!user){document.getElementById("loginError").textContent="Benutzername oder Passwort ist falsch.";return}
+ currentUser={name:user.name,role:user.role};sessionStorage.setItem("jfCurrentUser",JSON.stringify(currentUser));showApp();window.location.hash="lehrplan";document.getElementById("lehrplan").scrollIntoView({behavior:"smooth",block:"start"});
+}
+function logout(){sessionStorage.removeItem("jfCurrentUser");currentUser=null;document.getElementById("app").hidden=true;document.getElementById("loginScreen").hidden=false;document.getElementById("loginPassword").value=""}
+function showApp(){document.getElementById("loginScreen").hidden=true;document.getElementById("app").hidden=false;document.getElementById("currentUser").textContent=`Angemeldet: ${currentUser.name} (${currentUser.role})`;const adminButton=document.getElementById("adminButton"),trainerButton=document.getElementById("trainerButton");adminButton.hidden=currentUser.role!=="admin";trainerButton.hidden=!canTrain();document.getElementById("admin").classList.remove("show");if(!canTrain())document.getElementById("trainer").classList.remove("show");render();}
+document.getElementById("filter").onchange=render;
+const savedTitle=localStorage.getItem("jfSiteTitle"),savedSub=localStorage.getItem("jfSiteSubtitle");
+if(savedTitle)document.querySelector("h1").textContent=savedTitle;if(savedSub)document.querySelector(".subtitle").textContent=savedSub;
+function saveSiteSettings(){localStorage.setItem("jfSiteTitle",document.getElementById("siteTitle").value||"Jugendfeuerwehr Weddingstedt");localStorage.setItem("jfSiteSubtitle",document.getElementById("siteSubtitle").value||"Interaktiver Ausbildungs- & Lehrplan");location.reload()}
+const quiz=[["Was ist bei einer Übung besonders wichtig?",["Sicherheit und klare Absprachen","Nur Geschwindigkeit","Alleine arbeiten"],0],["Was gehört zu guter Kommunikation?",["Unklare Meldungen","Klare und kurze Meldungen","Dazwischenrufen"],1],["Was ist ein Ziel der Jugendfeuerwehr?",["Teamarbeit und Feuerwehrwissen","Gefährliche Einsätze ohne Aufsicht","Nur Wettbewerb"],0]];
+let qi=0;function showQuiz(){let q=quiz[qi];question.textContent=q[0];answers.innerHTML=q[1].map((a,i)=>`<button onclick="answer(${i})">${a}</button>`).join("");quizResult.textContent=""}function answer(i){quizResult.textContent=i===quiz[qi][2]?"✅ Richtig!":"❌ Nicht ganz."}function nextQuestion(){qi=(qi+1)%quiz.length;showQuiz()}
+document.getElementById("savedNote").textContent=localStorage.getItem("jfNote")?"Gespeicherte Notiz: "+localStorage.getItem("jfNote"):"";
+render();showQuiz();renderEditors();renderTraining();if(currentUser&&users.some(u=>u.name===currentUser.name&&u.active!==false))showApp();else if(currentUser)logout();
+if("serviceWorker" in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("service-worker.js"));
+</script>
+</body>
+</html>
