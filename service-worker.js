@@ -1,4 +1,4 @@
-const CACHE_NAME = "jf-lehrplan-v1";
+const CACHE_NAME = "jf-lehrplan-v2";
 const APP_SHELL = ["./", "./index.html", "./manifest.webmanifest", "./icon.svg"];
 
 self.addEventListener("install", event => {
