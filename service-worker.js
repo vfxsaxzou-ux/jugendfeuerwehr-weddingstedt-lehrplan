@@ -1,4 +1,4 @@
-const CACHE_NAME = "jf-lehrplan-v4";
+const CACHE_NAME = "jf-lehrplan-v5";
 const APP_SHELL = ["./", "./index.html", "./manifest.webmanifest", "./icon.svg"];
 
 self.addEventListener("install", event => {
@@ -18,7 +18,7 @@ self.addEventListener("fetch", event => {
   const isPage = event.request.mode === "navigate" || event.request.url.endsWith("/index.html");
   if (isPage) {
     event.respondWith(
-      fetch(event.request).then(response => {
+      fetch(event.request, {cache: "no-store"}).then(response => {
         const copy = response.clone();
         caches.open(CACHE_NAME).then(cache => cache.put(event.request, copy));
         return response;
